@@ -8,6 +8,170 @@
     <title>CAMPS Connect | Site Oficial</title>
   
     <style>
+      
+/* FUNDO DO LOGIN */
+.tela-login {
+  position: fixed;
+  inset: 0;
+  background: #0b1729;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+/* JANELA DO LOGIN */
+.caixa-login {
+  width: 90%;
+  max-width: 400px;
+  padding: 40px;
+  background: #152b46;
+  border: 1px solid #35516d;
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  color: white;
+  text-align: center;
+}
+
+.caixa-login form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.caixa-login input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #35516d;
+  border-radius: 10px;
+  background: white;
+  color: #18283b;
+}
+
+.caixa-login button {
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #2787bd;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#erroLogin {
+  color: #ff6b6b;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+#erroLogin[hidden] {
+  display: none;
+}
+
+      
+/* FUNDO DA TELA DE LOGIN */
+.tela-login {
+    position: fixed;
+    inset: 0;
+    background: #0b1729;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+/* JANELA CENTRAL DO LOGIN */
+.caixa-login {
+    width: 90%;
+    max-width: 400px;
+    padding: 40px;
+    background: #152b46;
+    border: 1px solid #35516d;
+    border-radius: 18px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    color: white;
+    text-align: center;
+}
+
+/* CAMPOS E BOTÃO DO LOGIN */
+.caixa-login form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 28px;
+}
+
+.caixa-login input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #35516d;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #18283b;
+    outline: none;
+}
+
+.caixa-login input:focus {
+    border-color: #69b9e9;
+    box-shadow: 0 0 0 3px rgba(105, 185, 233, 0.18);
+}
+
+.caixa-login button {
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #2787bd;
+    color: white;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.caixa-login button:hover {
+    background: #369ed5;
+}
+
+/* TÍTULO DA TELA DE LOGIN */
+.caixa-login h1 {
+    font-size: 30px;
+    margin: 0 0 8px;
+    letter-spacing: -1px;
+    color: #ffffff;
+}
+
+.caixa-login h1::after {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 3px;
+    margin: 14px auto;
+    border-radius: 3px;
+    background: #69b9e9;
+}
+
+.caixa-login p {
+    color: #b6c6d7;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+/* ANIMAÇÃO DE BOAS-VINDAS */
+.tela-login.saindo {
+    animation: sairLogin 0.7s ease forwards;
+    pointer-events: none;
+}
+
+@keyframes sairLogin {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
       * {
         box-sizing: border-box;
       }
@@ -854,7 +1018,33 @@ font-size: 30px;
   </head>
 
   <body>
-    <div class="shell">
+   
+<!-- TELA DE LOGIN CAMPS CONNECT -->
+<div class="tela-login">
+  <div class="caixa-login">
+    <h1>CAMPS Connect.</h1>
+    <p>TRANSTEC WORLD</p>
+
+    <form id="formLogin">
+      <input type="text" id="usuario"
+             placeholder="Ex.: transtec.camps"
+             autocomplete="username" required>
+
+      <input type="password" id="senha"
+             placeholder="Senha"
+             autocomplete="current-password" required>
+
+      <p id="erroLogin" role="alert" hidden>
+        Usuário ou senha incorretos.
+      </p>
+
+      <button type="submit">Entrar no portal</button>
+    </form>
+
+    <p>Acesso exclusivo a usuários autorizados</p>
+  </div>
+</div>
+ <div class="shell">
       
 
      
@@ -1696,5 +1886,54 @@ font-size: 30px;
     );
   });
 </script>
+<!-- AUTENTICAÇÃO CAMPS CONNECT -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  // CONFIGURAÇÃO DO SUPABASE
+  const SUPABASE_URL = "https://tlamjubqbjwyaouokdjp.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_GJooxRFbWezotCoQr9bVMQ_dgzY-d9d";
+
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY,
+    {
+      auth: {
+        storage: window.sessionStorage,
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: false
+      }
+    }
+  );
+</script>
+
+<!-- LOGIN CAMPS CONNECT -->
+<script>
+  const formularioLogin = document.getElementById("formLogin");
+  const mensagemErro = document.getElementById("erroLogin");
+  const telaLogin = document.querySelector(".tela-login");
+formularioLogin.addEventListener("submit", async (evento) => {
+  evento.preventDefault();
+
+  mensagemErro.hidden = true;
+
+  const usuario = document.getElementById("usuario").value.trim();
+  const senha = document.getElementById("senha").value;
+
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
+    email: usuario,
+    password: senha
+  });
+
+  if (error) {
+    mensagemErro.textContent = "Usuário ou senha incorretos.";
+    mensagemErro.hidden = false;
+    return;
+  }
+
+  telaLogin.style.display = "none";
+});</script>
+
   </body>
 </html>
