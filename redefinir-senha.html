@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Redefinir senha | CAMPS Connect</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0b1729;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .caixa {
+      background: #152b46;
+      padding: 35px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 380px;
+      text-align: center;
+    }
+
+    input, button {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 14px;
+      margin-top: 14px;
+      border-radius: 8px;
+      border: none;
+    }
+
+    button {
+      background: #2588c1;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="caixa">
+    <h1>CAMPS Connect.</h1>
+    <p>TRANSTEC WORLD</p>
+    <h2>Redefinir senha</h2>
+
+    <form id="formRedefinir">
+      <input
+        type="password"
+        id="novaSenha"
+        placeholder="Nova senha"
+        autocomplete="new-password"
+        minlength="12"
+        required
+      >
+      <button type="submit">Alterar senha</button>
+    </form>
+
+    <p id="mensagem" role="status"></p>
+  </div>
+
+<!-- SUPABASE - RECUPERAÇÃO DE SENHA -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  const SUPABASE_URL = "https://tlamjubqbjwyaouokdjp.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_GJooxRFbWezotCoQr9bVMQ_dgzY-d9d";
+
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY,
+    {
+      auth: {
+        detectSessionInUrl: true,
+        persistSession: false
+      }
+    }
+  );
+
+const formulario = document.getElementById("formRedefinir");
+const mensagem = document.getElementById("mensagem");
+const botao = formulario.querySelector("button");
+
+let recuperacaoAutorizada = false;
+
+botao.disabled = true;
+mensagem.textContent = "Verificando link de recuperação...";
+
+supabaseClient.auth.onAuthStateChange((evento) => {
+  if (evento === "PASSWORD_RECOVERY") {
+    recuperacaoAutorizada = true;
+    botao.disabled = false;
+    mensagem.textContent = "Digite sua nova senha.";
+  }
+});
+
+formulario.addEventListener("submit", async (evento) => {
+  evento.preventDefault();
+
+  if (!recuperacaoAutorizada) {
+    mensagem.textContent = "Abra um link válido de recuperação.";
+    return;
+  }
+
+  botao.disabled = true;
+  const novaSenha = document.getElementById("novaSenha").value;
+
+  const { error } = await supabaseClient.auth.updateUser({
+    password: novaSenha
+  });
+
+  if (error) {
+    mensagem.textContent = "Não foi possível alterar a senha. Solicite um novo link.";
+    botao.disabled = false;
+    return;
+  }
+
+  mensagem.textContent = "Senha alterada com sucesso!";
+  recuperacaoAutorizada = false;
+  formulario.reset();
+  await supabaseClient.auth.signOut();
+});
+</script>
+</body>
+</html>
