@@ -46,7 +46,8 @@
 #toggleSidebar {
     position: absolute;
 top: 16px;
-right: 12px;
+left: 190px;
+right: auto;
     z-index: 9999;
     width: 42px;
     height: 42px;
@@ -59,24 +60,20 @@ right: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     transition: left 0.4s ease, background 0.25s ease;
 }
-
-#toggleSidebar:hover {
-    background: #3681b4;
-}
-
 .shell.menu-fechado #toggleSidebar {
     position: fixed;
     top: 16px;
     left: 16px;
     right: auto;
-}
-   .shell.menu-fechado .side {
-    width: 0;
-    padding-left: 0;
-    padding-right: 0;
-    overflow: visible;
     visibility: visible;
+    z-index: 9999;
 }
+  .shell.menu-fechado .side {
+    width: 0;
+    padding: 0;
+    overflow: visible;
+}
+
 
  .shell.menu-fechado .side > :not(#toggleSidebar) {
     visibility: hidden;
@@ -860,7 +857,7 @@ right: 12px;
 
      
   
- <aside class="side">    
+ 
   <button
   type="button"
   id="toggleSidebar"
@@ -869,7 +866,8 @@ right: 12px;
 >
   ☰
 </button>
-        <div class="logo">CAMPS <span>Connect.</span></div>
+        <aside class="side">  
+            <div class="logo">CAMPS <span>Connect.</span></div>
         <div class="small">Transtec World</div>
         <nav>
           <button data-page="home" class="active">⌂ &nbsp; Visão geral</button
