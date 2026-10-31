@@ -9,17 +9,6 @@
   
     <style>
       
-/* FUNDO DO LOGIN */
-.tela-login {
-  position: fixed;
-  inset: 0;
-  background: #0b1729;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000;
-}
-
 /* JANELA DO LOGIN */
 .caixa-login {
   width: 90%;
@@ -70,6 +59,12 @@
 }
 
       
+/* Mantém o portal visualmente oculto até a sessão ser validada.
+   Isto não substitui proteção de acesso no servidor. */
+body:not(.camps-autenticado) .shell {
+  visibility: hidden;
+}
+
 /* FUNDO DA TELA DE LOGIN */
 .tela-login {
     position: fixed;
@@ -1912,77 +1907,87 @@ font-size: 30px;
 
 <!-- LOGIN CAMPS CONNECT -->
 <script>
- const formularioLogin = document.getElementById("formLogin");
+  const formularioLogin = document.getElementById("formLogin");
   const mensagemErro = document.getElementById("erroLogin");
-  const telaLogin = document.querySelector(".tela-login"); 
+  const telaLogin = document.querySelector(".tela-login");
+  const botaoEntrar = formularioLogin.querySelector('button[type="submit"]');
 
-async function verificarSessao() {
-  try {
+  function exibirPortal() {
+    document.body.classList.add("camps-autenticado");
+    telaLogin.style.display = "none";
+  }
+
+  function exibirLogin() {
+    document.body.classList.remove("camps-autenticado");
+    telaLogin.style.display = "flex";
+  }
+
+  async function sessaoValida() {
     const resposta = await fetch("/verificar-sessao", {
       method: "GET",
       credentials: "same-origin",
       cache: "no-store"
     });
+    if (!resposta.ok) return false;
+    const dados = await resposta.json();
+    return dados.autenticado === true;
+  }
 
-    if (resposta.ok) {
-      const dados = await resposta.json();
-
-      if (dados.autenticado === true) {
-        telaLogin.style.display = "none";
-        return;
+  // A verificação inicial é feita uma única vez.
+  const verificacaoInicial = (async () => {
+    try {
+      if (await sessaoValida()) {
+        exibirPortal();
+      } else {
+        exibirLogin();
       }
+    } catch (erro) {
+      console.error("Não foi possível verificar a sessão.", erro);
+      exibirLogin();
     }
-  } catch (erro) {
-    console.error("Não foi possível verificar a sessão.", erro);
-  }
+  })();
 
-  // Mostra o login quando não há uma sessão válida
-  telaLogin.style.display = "flex";
-}
+  formularioLogin.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+    mensagemErro.hidden = true;
+    botaoEntrar.disabled = true;
 
-  
+    try {
+      // Evita que a verificação inicial reabra o login após a entrada.
+      await verificacaoInicial;
 
+      const usuario = document.getElementById("usuario").value.trim();
+      const senha = document.getElementById("senha").value;
 
-verificarSessao();
+      const resposta = await fetch("/login", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ usuario, password: senha })
+      });
 
-  
-formularioLogin.addEventListener("submit", async (evento) => {
-  evento.preventDefault();
+      if (!resposta.ok) {
+        throw new Error("Credenciais recusadas ou serviço indisponível.");
+      }
 
-  mensagemErro.hidden = true;
+      // Só abre o portal depois de confirmar que o servidor reconhece a sessão.
+      if (!(await sessaoValida())) {
+        throw new Error("O login respondeu, mas a sessão não foi confirmada.");
+      }
 
-  const usuario = document.getElementById("usuario").value.trim();
-  const senha = document.getElementById("senha").value;
-
-  let error = null;
-
-try {
-  const resposta = await fetch("/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      usuario: usuario,
-      password: senha
-    })
+      exibirPortal();
+      formularioLogin.reset();
+    } catch (erro) {
+      console.error("Falha no login:", erro);
+      mensagemErro.textContent =
+        "Não foi possível entrar. Confira os dados ou tente novamente.";
+      mensagemErro.hidden = false;
+      exibirLogin();
+    } finally {
+      botaoEntrar.disabled = false;
+    }
   });
-
-  if (!resposta.ok) {
-    error = true;
-  }
-} catch (erro) {
-  error = true;
-}
-
-  if (error) {
-    mensagemErro.textContent = "Usuário ou senha incorretos.";
-    mensagemErro.hidden = false;
-    return;
-  }
-
-  telaLogin.style.display = "none";
-});</script>
+</script>
 
   </body>
 </html>
