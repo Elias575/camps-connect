@@ -1,6 +1,7 @@
 
 {
   "version": 1,
-  "include": ["/login"],
+  "include": ["/login", "/verificar-sessao"],
   "exclude": []
 }
+

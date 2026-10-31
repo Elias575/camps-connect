@@ -1912,9 +1912,32 @@ font-size: 30px;
 
 <!-- LOGIN CAMPS CONNECT -->
 <script>
-  const formularioLogin = document.getElementById("formLogin");
+ const formularioLogin = document.getElementById("formLogin");
   const mensagemErro = document.getElementById("erroLogin");
-  const telaLogin = document.querySelector(".tela-login");
+  const telaLogin = document.querySelector(".tela-login"); 
+async function verificarSessao() {
+  try {
+    const resposta = await fetch("/verificar-sessao", {
+      method: "GET",
+      credentials: "same-origin",
+      cache: "no-store"
+    });
+
+    if (resposta.ok) {
+      const dados = await resposta.json();
+
+      if (dados.autenticado === true) {
+        telaLogin.style.display = "none";
+      }
+    }
+  } catch (erro) {
+    console.error("Não foi possível verificar a sessão.");
+  }
+}
+
+verificarSessao();
+
+  
 formularioLogin.addEventListener("submit", async (evento) => {
   evento.preventDefault();
 
