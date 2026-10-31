@@ -1066,7 +1066,9 @@ font-size: 30px;
           ><button data-page="library">▤ &nbsp; Biblioteca operacional</button
           ><button data-page="systems">↗ &nbsp; Sistemas e acessos</button
           ><button data-page="about">ⓘ &nbsp; Sobre o portal</button>
-        </nav>
+        
+<button type="button" id="btnAlterarSenha">🔒 &nbsp; Alterar minha senha</button>
+</nav>
         <div class="sidefooter">
           Portal de procedimentos · Versão de revisão<br />CAMPS Santos ×
           Transtec World
@@ -1921,10 +1923,26 @@ formularioLogin.addEventListener("submit", async (evento) => {
   const usuario = document.getElementById("usuario").value.trim();
   const senha = document.getElementById("senha").value;
 
-  const { data, error } = await supabaseClient.auth.signInWithPassword({
-    email: usuario,
-    password: senha
+  let error = null;
+
+try {
+  const resposta = await fetch("/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      usuario: usuario,
+      password: senha
+    })
   });
+
+  if (!resposta.ok) {
+    error = true;
+  }
+} catch (erro) {
+  error = true;
+}
 
   if (error) {
     mensagemErro.textContent = "Usuário ou senha incorretos.";
