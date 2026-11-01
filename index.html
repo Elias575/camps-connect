@@ -9,17 +9,6 @@
   
     <style>
       
-/* FUNDO DO LOGIN */
-.tela-login {
-  position: fixed;
-  inset: 0;
-  background: #0b1729;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000;
-}
-
 /* JANELA DO LOGIN */
 .caixa-login {
   width: 90%;
@@ -70,6 +59,12 @@
 }
 
       
+/* Mantém o portal visualmente oculto até a sessão ser validada.
+   Isto não substitui proteção de acesso no servidor. */
+body:not(.camps-autenticado) .shell {
+  visibility: hidden;
+}
+
 /* FUNDO DA TELA DE LOGIN */
 .tela-login {
     position: fixed;
@@ -1015,9 +1010,166 @@ font-size: 30px;
 
 }
 </style>
-  </head>
+  
+<style id="camps-design-2026">
+:root {
+  --cc-ink:#142b43; --cc-muted:#657b90; --cc-blue:#1e678e;
+  --cc-line:#e0e8f0; --cc-surface:#fff; --cc-bg:#f2f5f9;
+  --cc-shadow:0 12px 38px rgba(17,42,66,.055);
+}
+html { scroll-behavior:smooth; }
+body { background:var(--cc-bg); color:var(--cc-ink); }
+body, button, input { font-family:Inter,"Segoe UI",Arial,sans-serif; }
+button, a, input { -webkit-tap-highlight-color:transparent; }
+button:focus-visible,a:focus-visible,input:focus-visible {
+ outline:3px solid #68b9e6;outline-offset:3px;
+}
+.shell { grid-template-columns:256px minmax(0,1fr); }
+.side {
+ background:linear-gradient(175deg,#10263f 0%,#0e2036 100%);
+ border-right:1px solid rgba(255,255,255,.08);
+ box-shadow:7px 0 30px rgba(11,30,50,.05);
+}
+.side .logo {font-size:27px;letter-spacing:-1.3px}
+.side .small {color:#93b4ca}
+.side nav {gap:7px}
+.side nav button {
+ border:1px solid transparent; border-radius:11px;
+ font-size:13px; font-weight:600; letter-spacing:.01em;
+ transition:background .22s ease,border-color .22s ease,transform .22s ease;
+}
+.side nav button:hover {background:rgba(255,255,255,.10);transform:translateX(3px)}
+.side nav button.active {background:rgba(79,157,207,.19);border-color:rgba(123,190,232,.24);color:#fff}
+.sidefooter {line-height:1.8}
+.main {max-width:1530px;padding:34px clamp(22px,4vw,66px) 45px}
+.top {border-bottom:1px solid var(--cc-line);padding-bottom:20px;margin-bottom:28px}
+.top .tag {background:#e5f0f8;color:#286181}
+.eyebrow {letter-spacing:1.65px}
+.hero {
+ background:linear-gradient(118deg,#10263e 0%,#1b4868 65%,#24607d 100%);
+ border:1px solid rgba(255,255,255,.09);
+ box-shadow:0 18px 46px rgba(18,50,77,.15);
+ border-radius:22px; position:relative;
+}
+.hero:before {
+ content:"";position:absolute;inset:0;pointer-events:none;
+ background:radial-gradient(circle at 24% 12%,rgba(116,195,232,.15),transparent 50%);
+}
+.hero > * {position:relative}
+.hero h1 {letter-spacing:-2.4px}
+.hero .cta {box-shadow:0 6px 22px rgba(5,19,34,.16);transition:transform .2s,box-shadow .2s}
+.hero .cta:hover {transform:translateY(-2px);box-shadow:0 12px 26px rgba(5,19,34,.2)}
+.card,.panel,.detailhero,.introarmador,.empty {
+ border-color:var(--cc-line);
+ box-shadow:var(--cc-shadow);
+}
+.card,.panel,.detailhero {border-radius:17px}
+.card {transition:transform .23s ease,box-shadow .23s ease,border-color .23s ease}
+.card:hover {transform:translateY(-3px);box-shadow:0 18px 42px rgba(15,42,66,.11);border-color:#c8dce9}
+.brandcard {border-radius:12px}
+.brandcard:hover {transform:translateY(-4px)}
+.brandcard button,.outline,.linkbtn,.filter {
+ transition:background .2s ease,transform .2s ease,box-shadow .2s ease;
+}
+.brandcard button:hover,.outline:hover,.linkbtn:hover {transform:translateY(-1px)}
+.filter.active {background:#1d5276;box-shadow:0 4px 12px rgba(24,78,114,.13)}
+.search {border-radius:12px;box-shadow:0 4px 18px rgba(13,42,67,.04)}
+.panel {padding:28px}
+.detailhero {padding:34px}
+.step {align-items:start}
+.num {border-radius:11px}
+.footnote {border-top:1px solid var(--cc-line);padding-top:18px;margin-top:40px}
+#app > * {animation:cc-page-enter .34s cubic-bezier(.2,.7,.2,1) both}
+#app > :nth-child(2) {animation-delay:.035s}
+#app > :nth-child(3) {animation-delay:.065s}
+@keyframes cc-page-enter {
+ from {opacity:0;transform:translateY(9px)}
+ to {opacity:1;transform:translateY(0)}
+}
+.tela-login {
+ background:radial-gradient(ellipse at 15% 18%,#244c69 0%,transparent 44%),linear-gradient(140deg,#08182a,#122f49);
+ padding:22px;
+}
+.tela-login:before {
+ content:"";position:absolute;inset:0;pointer-events:none;
+ background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+ background-size:48px 48px;
+}
+.caixa-login {
+ position:relative;max-width:430px;padding:43px 42px 36px;
+ background:rgba(21,43,66,.95);
+ border:1px solid rgba(147,191,220,.26);
+ border-radius:21px;
+ box-shadow:0 30px 85px rgba(0,8,20,.38);
+ animation:cc-login-enter .5s cubic-bezier(.2,.7,.2,1) both;
+}
+@keyframes cc-login-enter {
+ from {opacity:0;transform:translateY(16px) scale(.985)}
+ to {opacity:1;transform:translateY(0) scale(1)}
+}
+.caixa-login h1 {font-size:34px;letter-spacing:-1.5px}
+.caixa-login form {gap:15px}
+.caixa-login input {border-radius:11px;padding:15px 16px;transition:border-color .2s,box-shadow .2s}
+.caixa-login button {
+ min-height:49px;border-radius:11px;transition:background .2s,transform .2s;
+}
+.caixa-login button:hover:not(:disabled) {background:#3496c8;transform:translateY(-1px)}
+.caixa-login button:disabled {opacity:.78;cursor:wait}
+.caixa-login button.cc-busy:before {
+ content:"";display:inline-block;width:14px;height:14px;
+ border:2px solid rgba(255,255,255,.35);border-top-color:white;
+ border-radius:50%;vertical-align:-3px;margin-right:10px;
+ animation:cc-spin .8s linear infinite;
+}
+@keyframes cc-spin {to {transform:rotate(360deg)}}
+#erroLogin:not([hidden]) {background:rgba(220,75,75,.10);border:1px solid rgba(255,117,117,.3);padding:10px;border-radius:9px}
+#cc-inicializando {
+ position:fixed;inset:0;z-index:10050;display:flex;align-items:center;justify-content:center;
+ background:linear-gradient(140deg,#091c30,#153752);color:#fff;
+ transition:opacity .3s ease,visibility .3s ease;
+}
+#cc-inicializando.cc-hide {opacity:0;visibility:hidden;pointer-events:none}
+.cc-loading-content {text-align:center;padding:25px}
+.cc-loading-mark {
+ width:58px;height:58px;border-radius:17px;
+ background:linear-gradient(140deg,#255f82,#3c91b9);
+ display:grid;place-items:center;margin:0 auto 22px;
+ box-shadow:0 10px 30px rgba(2,12,24,.2);
+ font-size:27px;font-weight:800;
+}
+.cc-loading-title {font-size:24px;font-weight:800;letter-spacing:-.7px}
+.cc-loading-sub {font-size:13px;color:#b4cbdc;margin:9px 0 22px}
+.cc-loading-track {width:180px;height:3px;border-radius:8px;background:rgba(255,255,255,.15);overflow:hidden;margin:auto}
+.cc-loading-track:after {content:"";display:block;width:40%;height:100%;background:#72c3e6;animation:cc-progress 1.3s ease-in-out infinite}
+@keyframes cc-progress {from{transform:translateX(-110%)}to{transform:translateX(350%)}}
+@media (max-width:900px) {
+ .shell {grid-template-columns:1fr}
+ .main {padding:20px}
+ .hero {padding:28px}
+ .side {box-shadow:none}
+}
+@media (max-width:560px) {
+ .caixa-login {padding:30px 22px}
+ .hero h1 {font-size:43px}
+ .detailhero,.panel {padding:20px}
+}
+@media (prefers-reduced-motion:reduce) {
+ *,*::before,*::after {animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
 
   <body>
+<div id="cc-inicializando" role="status" aria-live="polite" aria-label="Verificando sessão">
+  <div class="cc-loading-content">
+    <div class="cc-loading-mark" aria-hidden="true">C</div>
+    <div class="cc-loading-title">CAMPS Connect.</div>
+    <div class="cc-loading-sub">Preparando seu ambiente de trabalho</div>
+    <div class="cc-loading-track" aria-hidden="true"></div>
+  </div>
+</div>
+
    
 <!-- TELA DE LOGIN CAMPS CONNECT -->
 <div class="tela-login">
@@ -1888,93 +2040,101 @@ font-size: 30px;
     );
   });
 </script>
-<!-- AUTENTICAÇÃO CAMPS CONNECT -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-  // CONFIGURAÇÃO DO SUPABASE
-  const SUPABASE_URL = "https://tlamjubqbjwyaouokdjp.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_GJooxRFbWezotCoQr9bVMQ_dgzY-d9d";
-
-  const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY,
-    {
-      auth: {
-        storage: window.sessionStorage,
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: false
-      }
-    }
-  );
-</script>
-
 <!-- LOGIN CAMPS CONNECT -->
 <script>
- const formularioLogin = document.getElementById("formLogin");
+  const formularioLogin = document.getElementById("formLogin");
   const mensagemErro = document.getElementById("erroLogin");
-  const telaLogin = document.querySelector(".tela-login"); 
-async function verificarSessao() {
-  try {
+  const telaLogin = document.querySelector(".tela-login");
+  const botaoEntrar = formularioLogin.querySelector('button[type="submit"]');
+
+  const telaCarregamento = document.getElementById("cc-inicializando");
+  function encerrarCarregamento() {
+    telaCarregamento.classList.add("cc-hide");
+    telaCarregamento.setAttribute("aria-hidden", "true");
+  }
+
+  function exibirPortal() {
+    document.body.classList.add("camps-autenticado");
+    telaLogin.style.display = "none";
+    encerrarCarregamento();
+  }
+
+  function exibirLogin() {
+    document.body.classList.remove("camps-autenticado");
+    telaLogin.style.display = "flex";
+    encerrarCarregamento();
+  }
+
+  async function sessaoValida() {
     const resposta = await fetch("/verificar-sessao", {
       method: "GET",
       credentials: "same-origin",
       cache: "no-store"
     });
+    if (!resposta.ok) return false;
+    const dados = await resposta.json();
+    return dados.autenticado === true;
+  }
 
-    if (resposta.ok) {
-      const dados = await resposta.json();
-
-      if (dados.autenticado === true) {
-        telaLogin.style.display = "none";
+  // A verificação inicial é feita uma única vez.
+  const verificacaoInicial = (async () => {
+    try {
+      if (await sessaoValida()) {
+        exibirPortal();
+      } else {
+        exibirLogin();
       }
+    } catch (erro) {
+      console.error("Não foi possível verificar a sessão.", erro);
+      exibirLogin();
     }
-  } catch (erro) {
-    console.error("Não foi possível verificar a sessão.");
-  }
-}
+  })();
 
-verificarSessao();
+  formularioLogin.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+    mensagemErro.hidden = true;
+    botaoEntrar.disabled = true;
+    botaoEntrar.classList.add("cc-busy");
+    botaoEntrar.textContent = "Verificando acesso...";
 
-  
-formularioLogin.addEventListener("submit", async (evento) => {
-  evento.preventDefault();
+    try {
+      // Evita que a verificação inicial reabra o login após a entrada.
+      await verificacaoInicial;
 
-  mensagemErro.hidden = true;
+      const usuario = document.getElementById("usuario").value.trim();
+      const senha = document.getElementById("senha").value;
 
-  const usuario = document.getElementById("usuario").value.trim();
-  const senha = document.getElementById("senha").value;
+      const resposta = await fetch("/login", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ usuario, password: senha })
+      });
 
-  let error = null;
+      if (!resposta.ok) {
+        throw new Error("Credenciais recusadas ou serviço indisponível.");
+      }
 
-try {
-  const resposta = await fetch("/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      usuario: usuario,
-      password: senha
-    })
+      // Só abre o portal depois de confirmar que o servidor reconhece a sessão.
+      if (!(await sessaoValida())) {
+        throw new Error("O login respondeu, mas a sessão não foi confirmada.");
+      }
+
+      exibirPortal();
+      formularioLogin.reset();
+    } catch (erro) {
+      console.error("Falha no login:", erro);
+      mensagemErro.textContent =
+        "Não foi possível entrar. Confira os dados ou tente novamente.";
+      mensagemErro.hidden = false;
+      exibirLogin();
+    } finally {
+      botaoEntrar.disabled = false;
+      botaoEntrar.classList.remove("cc-busy");
+      botaoEntrar.textContent = "Entrar no portal";
+    }
   });
-
-  if (!resposta.ok) {
-    error = true;
-  }
-} catch (erro) {
-  error = true;
-}
-
-  if (error) {
-    mensagemErro.textContent = "Usuário ou senha incorretos.";
-    mensagemErro.hidden = false;
-    return;
-  }
-
-  telaLogin.style.display = "none";
-});</script>
+</script>
 
   </body>
 </html>
