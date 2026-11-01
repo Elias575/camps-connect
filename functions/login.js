@@ -49,11 +49,17 @@ export async function onRequestPost(context) {
       );
     }
 
-    return Response.json({
-      access_token: resultado.access_token,
-      expires_in: resultado.expires_in,
-      token_type: resultado.token_type
-    });
+    return new Response(
+  JSON.stringify({ sucesso: true }),
+  {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-store",
+      "Set-Cookie": `camps_sessao=${resultado.access_token}; HttpOnly; Secure; SameSite=Lax; Path=/`
+    }
+  }
+);
   } catch (erro) {
     return Response.json(
       { mensagem: "Não foi possível realizar o login." },
