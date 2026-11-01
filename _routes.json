@@ -1,7 +1,5 @@
-
 {
   "version": 1,
-  "include": ["/login", "/verificar-sessao"],
+  "include": ["/login", "/verificar-sessao", "/alterar-senha"],
   "exclude": []
 }
-

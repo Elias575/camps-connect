@@ -1158,6 +1158,43 @@ button:focus-visible,a:focus-visible,input:focus-visible {
  *,*::before,*::after {animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
 </style>
+<style id="cc-refinamentos-2026">
+/* CAMPS Connect: refinamento visual e transições */
+:root { --cc-accent:#64c4ee; }
+#cc-inicializando { background: radial-gradient(circle at 50% 38%,#214e70 0%,#102d47 40%,#08192c 100%); }
+.cc-loading-mark { animation:cc-logo-breathe 1.6s ease-in-out infinite alternate; }
+@keyframes cc-logo-breathe {from{transform:translateY(0);box-shadow:0 10px 28px #020c1844}to{transform:translateY(-6px);box-shadow:0 20px 42px #5fc2ec33}}
+.cc-loading-title {letter-spacing:-.9px}
+.cc-loading-track {height:4px;width:220px}
+#cc-inicializando {transition:opacity .55s ease,visibility .55s ease}
+.hero {background:radial-gradient(circle at 95% 0%,#337ca144,transparent 44%),linear-gradient(118deg,#10263e,#1b4868 65%,#24607d)}
+.side nav button, .cta, .card, .brandcard, .panel, .linkbtn {will-change:transform}
+.side nav button:hover {transform:translateX(4px)}
+.panel {transition:box-shadow .25s ease,border-color .25s ease}
+.panel:hover {box-shadow:0 18px 44px #112a4210;border-color:#cbdce9}
+#app > * {animation-duration:.45s}
+#btnAlterarSenha {border:1px solid #64c4ee!important;border-radius:13px!important;margin-top:12px;text-align:left;transition:background .2s,transform .2s}
+#btnAlterarSenha:hover {background:#234d6c!important;transform:translateY(-2px)}
+.cc-modal-backdrop {position:fixed;inset:0;z-index:20000;display:flex;align-items:center;justify-content:center;padding:20px;background:#061526c9;backdrop-filter:blur(7px);animation:cc-fade-in .25s ease}
+.cc-modal-backdrop[hidden] {display:none!important}
+@keyframes cc-fade-in {from{opacity:0}to{opacity:1}}
+.cc-modal {width:min(100%,450px);background:#fff;color:#19334a;border-radius:20px;padding:30px;box-shadow:0 30px 90px #0006;position:relative;animation:cc-login-enter .35s ease both}
+.cc-modal h2 {margin:0 0 8px;font-size:25px}
+.cc-modal p {color:#5b7085;font-size:13px;margin:0 0 18px}
+.cc-modal label {display:block;font-size:13px;font-weight:700;margin:13px 0 6px}
+.cc-modal input {width:100%;padding:12px 14px;border:1px solid #cbd9e5;border-radius:10px;background:#f8fafc;color:#19334a}
+.cc-modal input:focus {outline:2px solid #6bc3eb;outline-offset:1px}
+.cc-modal-actions {display:flex;gap:10px;margin-top:22px}
+.cc-modal-actions button {flex:1;border:0;border-radius:10px;padding:12px;font-weight:700}
+#ccCancelarSenha {background:#edf2f7;color:#23455f}
+#ccSalvarSenha {background:#237fb2;color:white}
+#ccSalvarSenha:disabled {opacity:.6;cursor:wait}
+#ccSenhaAviso {font-size:13px;margin-top:14px;padding:10px;border-radius:9px;background:#eef5fa;color:#1a5374}
+#ccSenhaAviso[hidden] {display:none}
+#ccSenhaAviso.erro {background:#fff0f0;color:#9c2525}
+#ccSenhaAviso.sucesso {background:#eaf8f0;color:#12663a}
+@media(max-width:560px){.cc-modal{padding:22px}.cc-modal-actions{flex-direction:column}}
+</style>
 </head>
 
   <body>
@@ -2040,6 +2077,27 @@ button:focus-visible,a:focus-visible,input:focus-visible {
     );
   });
 </script>
+
+<div id="ccModalSenha" class="cc-modal-backdrop" hidden>
+  <section class="cc-modal" role="dialog" aria-modal="true" aria-labelledby="ccSenhaTitulo">
+    <h2 id="ccSenhaTitulo">Alterar minha senha</h2>
+    <p>Atualize a senha de acesso ao CAMPS Connect com segurança.</p>
+    <form id="ccFormSenha">
+      <label for="ccSenhaAtual">Senha atual</label>
+      <input id="ccSenhaAtual" type="password" autocomplete="current-password" required>
+      <label for="ccSenhaNova">Nova senha</label>
+      <input id="ccSenhaNova" type="password" autocomplete="new-password" minlength="8" required>
+      <label for="ccSenhaConfirma">Confirmar nova senha</label>
+      <input id="ccSenhaConfirma" type="password" autocomplete="new-password" minlength="8" required>
+      <div id="ccSenhaAviso" role="status" aria-live="polite" hidden></div>
+      <div class="cc-modal-actions">
+        <button type="button" id="ccCancelarSenha">Cancelar</button>
+        <button type="submit" id="ccSalvarSenha">Salvar nova senha</button>
+      </div>
+    </form>
+  </section>
+</div>
+
 <!-- LOGIN CAMPS CONNECT -->
 <script>
   const formularioLogin = document.getElementById("formLogin");
@@ -2048,9 +2106,13 @@ button:focus-visible,a:focus-visible,input:focus-visible {
   const botaoEntrar = formularioLogin.querySelector('button[type="submit"]');
 
   const telaCarregamento = document.getElementById("cc-inicializando");
+  const inicioCarregamento = performance.now();
   function encerrarCarregamento() {
-    telaCarregamento.classList.add("cc-hide");
-    telaCarregamento.setAttribute("aria-hidden", "true");
+    const restante = Math.max(0, 1600 - (performance.now() - inicioCarregamento));
+    setTimeout(() => {
+      telaCarregamento.classList.add("cc-hide");
+      telaCarregamento.setAttribute("aria-hidden", "true");
+    }, restante);
   }
 
   function exibirPortal() {
@@ -2136,5 +2198,70 @@ button:focus-visible,a:focus-visible,input:focus-visible {
   });
 </script>
 
-  </body>
+  
+<script id="cc-alterar-senha-js">
+(() => {
+  const abrir = document.getElementById('btnAlterarSenha');
+  const modal = document.getElementById('ccModalSenha');
+  const form = document.getElementById('ccFormSenha');
+  const cancelar = document.getElementById('ccCancelarSenha');
+  const salvar = document.getElementById('ccSalvarSenha');
+  const aviso = document.getElementById('ccSenhaAviso');
+  let focoAnterior;
+  function mostrarAviso(msg, tipo) {
+    aviso.hidden = false;
+    aviso.textContent = msg;
+    aviso.className = tipo || '';
+  }
+  function fechar() {
+    if (salvar.disabled) return;
+    modal.hidden = true;
+    form.reset();
+    aviso.hidden = true;
+    document.body.style.overflow = '';
+    focoAnterior?.focus();
+  }
+  abrir.addEventListener('click', () => {
+    focoAnterior = document.activeElement;
+    modal.hidden = false;
+    aviso.hidden = true;
+    document.body.style.overflow = 'hidden';
+    document.getElementById('ccSenhaAtual').focus();
+  });
+  cancelar.addEventListener('click', fechar);
+  modal.addEventListener('click', (e) => { if (e.target === modal) fechar(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.hidden) fechar();
+  });
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const atual = document.getElementById('ccSenhaAtual').value;
+    const nova = document.getElementById('ccSenhaNova').value;
+    const confirmar = document.getElementById('ccSenhaConfirma').value;
+    if (nova.length < 8) return mostrarAviso('A nova senha deve ter pelo menos 8 caracteres.', 'erro');
+    if (nova !== confirmar) return mostrarAviso('As novas senhas não coincidem.', 'erro');
+    if (atual === nova) return mostrarAviso('Escolha uma senha diferente da atual.', 'erro');
+    salvar.disabled = true;
+    salvar.textContent = 'Salvando...';
+    aviso.hidden = true;
+    try {
+      const res = await fetch('/alterar-senha', {
+        method: 'POST', credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ senhaAtual: atual, novaSenha: nova })
+      });
+      const dados = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(dados.mensagem || 'Não foi possível alterar a senha.');
+      form.reset();
+      mostrarAviso('Senha atualizada com sucesso! Use a nova senha no próximo acesso.', 'sucesso');
+    } catch (err) {
+      mostrarAviso(err.message || 'Erro de conexão. Tente novamente.', 'erro');
+    } finally {
+      salvar.disabled = false;
+      salvar.textContent = 'Salvar nova senha';
+    }
+  });
+})();
+</script>
+</body>
 </html>
