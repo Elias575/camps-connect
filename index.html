@@ -1173,27 +1173,63 @@ button:focus-visible,a:focus-visible,input:focus-visible {
 .panel {transition:box-shadow .25s ease,border-color .25s ease}
 .panel:hover {box-shadow:0 18px 44px #112a4210;border-color:#cbdce9}
 #app > * {animation-duration:.45s}
-#btnAlterarSenha {border:1px solid #64c4ee!important;border-radius:13px!important;margin-top:12px;text-align:left;transition:background .2s,transform .2s}
-#btnAlterarSenha:hover {background:#234d6c!important;transform:translateY(-2px)}
-.cc-modal-backdrop {position:fixed;inset:0;z-index:20000;display:flex;align-items:center;justify-content:center;padding:20px;background:#061526c9;backdrop-filter:blur(7px);animation:cc-fade-in .25s ease}
-.cc-modal-backdrop[hidden] {display:none!important}
-@keyframes cc-fade-in {from{opacity:0}to{opacity:1}}
-.cc-modal {width:min(100%,450px);background:#fff;color:#19334a;border-radius:20px;padding:30px;box-shadow:0 30px 90px #0006;position:relative;animation:cc-login-enter .35s ease both}
-.cc-modal h2 {margin:0 0 8px;font-size:25px}
-.cc-modal p {color:#5b7085;font-size:13px;margin:0 0 18px}
-.cc-modal label {display:block;font-size:13px;font-weight:700;margin:13px 0 6px}
-.cc-modal input {width:100%;padding:12px 14px;border:1px solid #cbd9e5;border-radius:10px;background:#f8fafc;color:#19334a}
-.cc-modal input:focus {outline:2px solid #6bc3eb;outline-offset:1px}
-.cc-modal-actions {display:flex;gap:10px;margin-top:22px}
-.cc-modal-actions button {flex:1;border:0;border-radius:10px;padding:12px;font-weight:700}
 #ccCancelarSenha {background:#edf2f7;color:#23455f}
 #ccSalvarSenha {background:#237fb2;color:white}
 #ccSalvarSenha:disabled {opacity:.6;cursor:wait}
-#ccSenhaAviso {font-size:13px;margin-top:14px;padding:10px;border-radius:9px;background:#eef5fa;color:#1a5374}
-#ccSenhaAviso[hidden] {display:none}
-#ccSenhaAviso.erro {background:#fff0f0;color:#9c2525}
-#ccSenhaAviso.sucesso {background:#eaf8f0;color:#12663a}
 @media(max-width:560px){.cc-modal{padding:22px}.cc-modal-actions{flex-direction:column}}
+</style>
+
+<style id="cc-experiencia-v2">
+/* Experiência V2 — animações suaves, sem layout shift na sidebar */
+:root { --cc-motion:cubic-bezier(.22,1,.36,1); }
+.shell {grid-template-columns:256px minmax(0,1fr)!important;transition:grid-template-columns .58s var(--cc-motion)!important;overflow:clip;}
+.shell.menu-fechado {grid-template-columns:0px minmax(0,1fr)!important;}
+.side {width:256px!important;min-width:256px;box-sizing:border-box;transform:translateX(0);transition:transform .58s var(--cc-motion),box-shadow .4s ease!important;will-change:transform;overflow:hidden!important;}
+.shell.menu-fechado .side {width:256px!important;min-width:256px!important;padding:30px 20px!important;transform:translateX(-100%);pointer-events:none;overflow:hidden!important;}
+.shell.menu-fechado .side > :not(#toggleSidebar) {visibility:visible!important;}
+.side nav {min-width:210px;}
+.side nav button {white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#toggleSidebar {position:fixed!important;left:194px;top:16px;z-index:9999;transition:left .58s var(--cc-motion),transform .3s ease,background .3s ease!important;border-radius:12px!important;}
+#toggleSidebar:hover {background:rgba(111,187,229,.16)!important;transform:scale(1.06);}
+.shell.menu-fechado #toggleSidebar {left:16px!important;}
+.main {min-width:0;transition:padding .45s ease;}
+#app > * {animation:cc-reveal .7s var(--cc-motion) both!important;}
+#app > :nth-child(2) {animation-delay:.06s!important;}
+#app > :nth-child(3) {animation-delay:.11s!important;}
+#app > :nth-child(4) {animation-delay:.15s!important;}
+@keyframes cc-reveal {from{opacity:0;transform:translateY(17px);filter:blur(3px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+.hero {isolation:isolate;box-shadow:0 24px 58px rgba(16,49,79,.18)!important;}
+.hero::after {content:"";position:absolute;inset:-60% -30%;pointer-events:none;z-index:-1;background:linear-gradient(110deg,transparent 38%,rgba(157,219,248,.095) 48%,transparent 58%);transform:translateX(-45%) rotate(-8deg);animation:cc-hero-light 12s ease-in-out infinite alternate;}
+@keyframes cc-hero-light {to{transform:translateX(45%) rotate(-8deg)}}
+.card,.brandcard,.panel,.linkbtn,.cta {transition:transform .4s var(--cc-motion),box-shadow .4s ease,border-color .3s ease,background .3s ease!important;}
+.card:hover {transform:translateY(-6px)!important;box-shadow:0 24px 48px rgba(16,48,78,.12)!important;}
+.brandcard:hover {transform:translateY(-6px) scale(1.012)!important;}
+.side nav button.active {box-shadow:inset 3px 0 0 #80d3f4;}
+#cc-inicializando {background:radial-gradient(ellipse at 50% 32%,#225b7b 0%,#102c46 40%,#071728 100%)!important;transition:opacity .85s ease,visibility .85s ease!important;}
+#cc-inicializando::before {content:"";position:absolute;inset:0;opacity:.25;pointer-events:none;background-image:linear-gradient(#a5d9ee17 1px,transparent 1px),linear-gradient(90deg,#a5d9ee17 1px,transparent 1px);background-size:58px 58px;mask-image:radial-gradient(circle at center,black,transparent 75%);}
+.cc-loading-content {position:relative;width:min(420px,92vw);animation:cc-load-enter .9s var(--cc-motion) both;}
+@keyframes cc-load-enter {from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.cc-loading-mark {width:74px;height:74px;border-radius:21px!important;box-shadow:0 18px 60px #65c9f233,0 0 0 1px #a8e5ff33!important;animation:cc-mark-float 2.4s ease-in-out infinite alternate!important;}
+@keyframes cc-mark-float {to{transform:translateY(-8px);box-shadow:0 26px 65px #65c9f244,0 0 0 1px #a8e5ff44}}
+.cc-loading-title {font-size:clamp(26px,4vw,34px);letter-spacing:-1.2px!important;}
+.cc-loading-sub {font-size:13px;letter-spacing:.02em;margin:12px 0 28px;}
+.cc-loading-track {width:min(290px,85%);height:4px!important;background:#ffffff20!important;}
+.cc-loading-track:after {width:100%!important;animation:cc-load-progress 2.2s cubic-bezier(.2,.7,.2,1) both!important;transform-origin:left center;}
+@keyframes cc-load-progress {from{transform:scaleX(.02)}to{transform:scaleX(1)}}
+.cc-loading-status {font-size:10px;color:#8fb5cc;letter-spacing:2px;margin-top:22px;font-weight:700;}
+.cc-loading-status span {color:#6dd2f1;padding:0 5px;}
+.tela-login {transition:opacity .7s ease,visibility .7s ease;}
+.caixa-login {animation:cc-login-enter .7s var(--cc-motion) both!important;}
+@media (max-width:900px) {
+ .shell,.shell.menu-fechado {grid-template-columns:minmax(0,1fr)!important;overflow:visible;}
+ .side {width:100%!important;min-width:0!important;transform:none!important;position:relative;height:auto;overflow:visible!important;}
+ .shell.menu-fechado .side {width:100%!important;min-width:0!important;padding:15px 20px!important;transform:none!important;pointer-events:auto;}
+ .shell.menu-fechado .side nav,.shell.menu-fechado .side .logo,.shell.menu-fechado .side .small {display:none!important;}
+ .side nav {min-width:0;}
+ #toggleSidebar,.shell.menu-fechado #toggleSidebar {position:fixed!important;top:12px!important;left:auto!important;right:16px!important;background:#153c5d!important;}
+ .main {padding-top:72px!important;}
+}
+@media (prefers-reduced-motion:reduce) {#cc-inicializando::before,.hero::after {animation:none!important} .cc-loading-track:after {animation:none!important;transform:scaleX(1)}}
 </style>
 </head>
 
@@ -1202,8 +1238,9 @@ button:focus-visible,a:focus-visible,input:focus-visible {
   <div class="cc-loading-content">
     <div class="cc-loading-mark" aria-hidden="true">C</div>
     <div class="cc-loading-title">CAMPS Connect.</div>
-    <div class="cc-loading-sub">Preparando seu ambiente de trabalho</div>
+    <div class="cc-loading-sub">Conectando pessoas, processos e conhecimento</div>
     <div class="cc-loading-track" aria-hidden="true"></div>
+    <div class="cc-loading-status" aria-hidden="true">CENTRAL OPERACIONAL <span>•</span> TRANSTEC WORLD</div>
   </div>
 </div>
 
@@ -1255,8 +1292,6 @@ button:focus-visible,a:focus-visible,input:focus-visible {
           ><button data-page="library">▤ &nbsp; Biblioteca operacional</button
           ><button data-page="systems">↗ &nbsp; Sistemas e acessos</button
           ><button data-page="about">ⓘ &nbsp; Sobre o portal</button>
-        
-<button type="button" id="btnAlterarSenha">🔒 &nbsp; Alterar minha senha</button>
 </nav>
         <div class="sidefooter">
           Portal de procedimentos · Versão de revisão<br />CAMPS Santos ×
@@ -2077,27 +2112,6 @@ button:focus-visible,a:focus-visible,input:focus-visible {
     );
   });
 </script>
-
-<div id="ccModalSenha" class="cc-modal-backdrop" hidden>
-  <section class="cc-modal" role="dialog" aria-modal="true" aria-labelledby="ccSenhaTitulo">
-    <h2 id="ccSenhaTitulo">Alterar minha senha</h2>
-    <p>Atualize a senha de acesso ao CAMPS Connect com segurança.</p>
-    <form id="ccFormSenha">
-      <label for="ccSenhaAtual">Senha atual</label>
-      <input id="ccSenhaAtual" type="password" autocomplete="current-password" required>
-      <label for="ccSenhaNova">Nova senha</label>
-      <input id="ccSenhaNova" type="password" autocomplete="new-password" minlength="8" required>
-      <label for="ccSenhaConfirma">Confirmar nova senha</label>
-      <input id="ccSenhaConfirma" type="password" autocomplete="new-password" minlength="8" required>
-      <div id="ccSenhaAviso" role="status" aria-live="polite" hidden></div>
-      <div class="cc-modal-actions">
-        <button type="button" id="ccCancelarSenha">Cancelar</button>
-        <button type="submit" id="ccSalvarSenha">Salvar nova senha</button>
-      </div>
-    </form>
-  </section>
-</div>
-
 <!-- LOGIN CAMPS CONNECT -->
 <script>
   const formularioLogin = document.getElementById("formLogin");
@@ -2108,7 +2122,7 @@ button:focus-visible,a:focus-visible,input:focus-visible {
   const telaCarregamento = document.getElementById("cc-inicializando");
   const inicioCarregamento = performance.now();
   function encerrarCarregamento() {
-    const restante = Math.max(0, 1600 - (performance.now() - inicioCarregamento));
+    const restante = Math.max(0, 2300 - (performance.now() - inicioCarregamento));
     setTimeout(() => {
       telaCarregamento.classList.add("cc-hide");
       telaCarregamento.setAttribute("aria-hidden", "true");
@@ -2198,70 +2212,5 @@ button:focus-visible,a:focus-visible,input:focus-visible {
   });
 </script>
 
-  
-<script id="cc-alterar-senha-js">
-(() => {
-  const abrir = document.getElementById('btnAlterarSenha');
-  const modal = document.getElementById('ccModalSenha');
-  const form = document.getElementById('ccFormSenha');
-  const cancelar = document.getElementById('ccCancelarSenha');
-  const salvar = document.getElementById('ccSalvarSenha');
-  const aviso = document.getElementById('ccSenhaAviso');
-  let focoAnterior;
-  function mostrarAviso(msg, tipo) {
-    aviso.hidden = false;
-    aviso.textContent = msg;
-    aviso.className = tipo || '';
-  }
-  function fechar() {
-    if (salvar.disabled) return;
-    modal.hidden = true;
-    form.reset();
-    aviso.hidden = true;
-    document.body.style.overflow = '';
-    focoAnterior?.focus();
-  }
-  abrir.addEventListener('click', () => {
-    focoAnterior = document.activeElement;
-    modal.hidden = false;
-    aviso.hidden = true;
-    document.body.style.overflow = 'hidden';
-    document.getElementById('ccSenhaAtual').focus();
-  });
-  cancelar.addEventListener('click', fechar);
-  modal.addEventListener('click', (e) => { if (e.target === modal) fechar(); });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !modal.hidden) fechar();
-  });
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const atual = document.getElementById('ccSenhaAtual').value;
-    const nova = document.getElementById('ccSenhaNova').value;
-    const confirmar = document.getElementById('ccSenhaConfirma').value;
-    if (nova.length < 8) return mostrarAviso('A nova senha deve ter pelo menos 8 caracteres.', 'erro');
-    if (nova !== confirmar) return mostrarAviso('As novas senhas não coincidem.', 'erro');
-    if (atual === nova) return mostrarAviso('Escolha uma senha diferente da atual.', 'erro');
-    salvar.disabled = true;
-    salvar.textContent = 'Salvando...';
-    aviso.hidden = true;
-    try {
-      const res = await fetch('/alterar-senha', {
-        method: 'POST', credentials: 'same-origin',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ senhaAtual: atual, novaSenha: nova })
-      });
-      const dados = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(dados.mensagem || 'Não foi possível alterar a senha.');
-      form.reset();
-      mostrarAviso('Senha atualizada com sucesso! Use a nova senha no próximo acesso.', 'sucesso');
-    } catch (err) {
-      mostrarAviso(err.message || 'Erro de conexão. Tente novamente.', 'erro');
-    } finally {
-      salvar.disabled = false;
-      salvar.textContent = 'Salvar nova senha';
-    }
-  });
-})();
-</script>
 </body>
 </html>
