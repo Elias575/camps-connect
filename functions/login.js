@@ -49,18 +49,17 @@ export async function onRequestPost(context) {
       );
     }
 
-    
-const respostaLogin = Response.json({
-  mensagem: "Login realizado com sucesso."
-});
-
-respostaLogin.headers.set(
-  "Set-Cookie",
-  `camps_sessao=${resultado.access_token}; HttpOnly; Secure; SameSite=Lax; Path=/`
+    return new Response(
+  JSON.stringify({ sucesso: true }),
+  {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-store",
+      "Set-Cookie": `camps_sessao=${resultado.access_token}; HttpOnly; Secure; SameSite=Lax; Path=/`
+    }
+  }
 );
-
-return respostaLogin;
-
   } catch (erro) {
     return Response.json(
       { mensagem: "Não foi possível realizar o login." },
