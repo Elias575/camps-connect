@@ -1231,6 +1231,54 @@ button:focus-visible,a:focus-visible,input:focus-visible {
 }
 @media (prefers-reduced-motion:reduce) {#cc-inicializando::before,.hero::after {animation:none!important} .cc-loading-track:after {animation:none!important;transform:scaleX(1)}}
 </style>
+
+<style id="cc-cores-armadores">
+.filters .filter {
+  --cor-armador: #245a7a;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: color .35s ease, border-color .35s ease,
+              transform .35s ease, box-shadow .35s ease;
+}
+
+.filters .filter::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--cor-armador);
+  transform: translateY(105%);
+  transition: transform .45s cubic-bezier(.22,1,.36,1);
+}
+
+.filters .filter:hover {
+  color: white !important;
+  border-color: var(--cor-armador) !important;
+  transform: translateY(-4px);
+  box-shadow: 0 9px 22px color-mix(in srgb, var(--cor-armador) 35%, transparent);
+}
+
+.filters .filter:hover::before {
+  transform: translateY(0);
+}
+
+.filters .filter[data-filter="Hapag-Lloyd"] { --cor-armador: #e47a24; }
+.filters .filter[data-filter="Maersk"] { --cor-armador: #298bc3; }
+.filters .filter[data-filter="MSC"] { --cor-armador: #c99b00; }
+.filters .filter[data-filter="Evergreen"] { --cor-armador: #1b8a56; }
+.filters .filter[data-filter="ONE"] { --cor-armador: #d128cc; }
+.filters .filter[data-filter="Log-In"] { --cor-armador: #168047; }
+.filters .filter[data-filter="CARU"] { --cor-armador: #c62d32; }
+
+@media (prefers-reduced-motion: reduce) {
+  .filters .filter,
+  .filters .filter::before {
+    transition: none;
+  }
+}
+</style>
+
 </head>
 
   <body>
