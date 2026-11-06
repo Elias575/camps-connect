@@ -1955,7 +1955,7 @@ button:focus-visible,a:focus-visible,input:focus-visible {
       function brandCard(b) {
         const n = DATA.filter((p) => p.brand === b[0]).length;
         const photo = window.CAMPS_CARRIER_PHOTOS[b[0]];
-        const media = photo ? `<figure class="carrier-photo"><img src="${esc(photo.src)}" alt="${esc(photo.alt)}" loading="lazy">${photo.credit ? `<figcaption>${esc(photo.credit)}</figcaption>` : ''}</figure>` : '';
+        const media = photo ? `<figure class="carrier-photo"><a href="${esc(photo.src)}" class="carrier-photo-link" target="_blank" rel="noopener noreferrer" aria-label="Ampliar foto de ${esc(b[0])}"><img src="${esc(photo.src)}" alt="${esc(photo.alt)}" loading="lazy" decoding="async"><span class="carrier-photo-expand">Ampliar foto ⤢</span></a>${photo.credit ? `<figcaption>${esc(photo.credit)}</figcaption>` : ''}</figure>` : '';
         return `<article class="card brandcard port-card ${photo ? 'has-photo' : ''}" style="--color:${b[1]}">${media}<div class="port-card-top"><span class="port-symbol" aria-hidden="true">${portIcon()}</span><span class="port-status ${n ? 'has-guides' : ''}">${n ? 'Biblioteca ativa' : 'Em preparação'}</span></div><div class="port-card-title"><span class="eyebrow">PARCEIRO MARÍTIMO</span><h3>${esc(b[0])}</h3></div><div class="port-card-count"><strong>${String(n).padStart(2,'0')}</strong><p>${n === 1 ? 'procedimento<br>para consultar' : n ? 'procedimentos<br>para consultar' : 'procedimentos<br>cadastrados'}</p></div><button data-brand="${esc(b[0])}"><span>${n ? 'Explorar procedimentos' : 'Conhecer armador'}</span><span aria-hidden="true">↗</span></button></article>`;
       }
       function portIcon() {
@@ -2135,10 +2135,11 @@ button:focus-visible,a:focus-visible,input:focus-visible {
           update();
         }
         document.addEventListener("click", (e) => {
-          const anchor = e.target.closest("a.guide-shot, .panel a:has(img)");
+          const anchor = e.target.closest("a.guide-shot, a.carrier-photo-link, .panel a:has(img), .reader-resources a:has(img)");
           if (!anchor || !anchor.querySelector("img")) return;
           const img = anchor.querySelector("img");
           if (
+            !anchor.classList.contains("carrier-photo-link") &&
             !img.src.startsWith("data:image/") &&
             !img.src.startsWith("blob:") &&
             !img.src.startsWith("file:")

@@ -1,11 +1,13 @@
 /* Biblioteca marítima: identidade dos parceiros e leitura dos procedimentos. */
-.port-card .carrier-photo { margin:-25px -25px 22px; position:relative; aspect-ratio:16/10; overflow:hidden; background:#e6eef3; }
-.carrier-photo img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s; }
-.port-card:hover .carrier-photo img { transform:scale(1.04); }
+.port-card .carrier-photo { margin:-25px -25px 22px; position:relative; aspect-ratio:3/2; overflow:hidden; background:#071b2c; }
+.carrier-photo-link { display:block; width:100%; height:100%; position:relative; cursor:zoom-in; }
+.carrier-photo img { width:100%; height:100%; object-fit:contain; display:block; }
+.carrier-photo-expand { position:absolute; right:12px; bottom:12px; border:1px solid #ffffff66; padding:6px 10px; border-radius:20px; color:white; background:#071b2cdd; font-size:11px; }
+.carrier-photo-link:focus-visible { outline-offset:-5px; }
 .carrier-photo figcaption { position:absolute; bottom:0; left:0; right:0; padding:8px 12px; color:white; background:#102b41cc; font-size:10px; }
 .port-card.has-photo .port-symbol { display:none; }
 .port-card.has-photo .port-card-title { margin-top:18px; }
-.brands { grid-template-columns:repeat(auto-fit,minmax(245px,1fr)); gap:20px; }
+.brands { grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr)); gap:20px; }
 .brandcard.port-card {
  position:relative; isolation:isolate; display:flex; flex-direction:column;
  min-height:300px; padding:25px; border:1px solid #ffffff20; border-radius:22px;
