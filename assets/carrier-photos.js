@@ -24,5 +24,13 @@ window.CAMPS_CARRIER_PHOTOS = Object.freeze({
   'Maersk': {
     src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmlBYVBX1Gr2rDOYGG0WDP2hOuIy5GrNXKnCsH4YDhYw&s=10',
     alt: 'Contêineres da Maersk'
+  },
+  'MSC': {
+    src: 'https://portalbenews.com.br/wp-content/uploads/2026/09/220916-evergreen-e1789049679883.jpg',
+    alt: 'Fotografia selecionada para o armador MSC'
+  },
+  'Evergreen': {
+    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtEq_cmIY20dIcU4NVW8fQgLv0vWu4iO-49cG2u7KbXA&s=10',
+    alt: 'Fotografia selecionada para o armador Evergreen'
   }
 });
