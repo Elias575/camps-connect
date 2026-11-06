@@ -1291,6 +1291,9 @@ button:focus-visible,a:focus-visible,input:focus-visible {
 
 <link rel="stylesheet" href="/assets/interactions.css">
 <link rel="stylesheet" href="/assets/armadores.css">
+<link rel="stylesheet" href="/assets/procedure-reader.css">
+<script src="/assets/procedure-reader.js"></script>
+<script src="/assets/carrier-photos.js"></script>
 </head>
 
   <body>
@@ -1951,7 +1954,9 @@ button:focus-visible,a:focus-visible,input:focus-visible {
       }
       function brandCard(b) {
         const n = DATA.filter((p) => p.brand === b[0]).length;
-        return `<article class="card brandcard port-card" style="--color:${b[1]}"><div class="port-card-top"><span class="port-symbol" aria-hidden="true">${portIcon()}</span><span class="port-status ${n ? 'has-guides' : ''}">${n ? 'Biblioteca ativa' : 'Em preparação'}</span></div><div class="port-card-title"><span class="eyebrow">PARCEIRO MARÍTIMO</span><h3>${esc(b[0])}</h3></div><div class="port-card-count"><strong>${String(n).padStart(2,'0')}</strong><p>${n === 1 ? 'procedimento<br>para consultar' : n ? 'procedimentos<br>para consultar' : 'procedimentos<br>cadastrados'}</p></div><button data-brand="${esc(b[0])}"><span>${n ? 'Explorar procedimentos' : 'Conhecer armador'}</span><span aria-hidden="true">↗</span></button></article>`;
+        const photo = window.CAMPS_CARRIER_PHOTOS[b[0]];
+        const media = photo ? `<figure class="carrier-photo"><img src="${esc(photo.src)}" alt="${esc(photo.alt)}" loading="lazy">${photo.credit ? `<figcaption>${esc(photo.credit)}</figcaption>` : ''}</figure>` : '';
+        return `<article class="card brandcard port-card ${photo ? 'has-photo' : ''}" style="--color:${b[1]}">${media}<div class="port-card-top"><span class="port-symbol" aria-hidden="true">${portIcon()}</span><span class="port-status ${n ? 'has-guides' : ''}">${n ? 'Biblioteca ativa' : 'Em preparação'}</span></div><div class="port-card-title"><span class="eyebrow">PARCEIRO MARÍTIMO</span><h3>${esc(b[0])}</h3></div><div class="port-card-count"><strong>${String(n).padStart(2,'0')}</strong><p>${n === 1 ? 'procedimento<br>para consultar' : n ? 'procedimentos<br>para consultar' : 'procedimentos<br>cadastrados'}</p></div><button data-brand="${esc(b[0])}"><span>${n ? 'Explorar procedimentos' : 'Conhecer armador'}</span><span aria-hidden="true">↗</span></button></article>`;
       }
       function portIcon() {
         return '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 27l16-6 16 6-5 11H13L8 27Z"/><path d="M15 24V12h18v12M21 12V6h6v6M24 22v15M4 41c4-4 8 4 12 0s8 4 12 0 8 4 16 0M20 17h8"/></svg>';
@@ -2002,9 +2007,8 @@ button:focus-visible,a:focus-visible,input:focus-visible {
         return `<div class="eyebrow">Acessos corporativos</div><h2>Sistemas e acessos</h2><p class="muted">Os links abrem em nova aba. Utilize somente acessos autorizados pela empresa.</p><div class="systems">${cards.map((c) => `<article class="card"><span class="eyebrow">${c[1]}</span><h3>${c[0]}</h3><p>${c[2]}</p>${link(c[3])}</article>`).join("")}</div><h2>Sem sistemas cadastrados</h2><div class="empty"><strong>MSC, Evergreen e CARU</strong><p>Não há links de sistemas próprios cadastrados para MSC, Evergreen e CARU. A Log-In possui acesso ao SISCCON, mas ainda não tem procedimentos documentados. A Evergreen já possui um procedimento de documentação de fotos na biblioteca.</p></div>`;
       }
       function detail() {
-        const p = DATA.find((x) => x.id === active);
-        if (!p) return library();
-        return `<button class="back" id="back">← Voltar à biblioteca</button>${introArmador(p.brand)}<section class="detailhero"><span class="eyebrow">${p.brand} / Procedimento operacional</span><h1>${p.title}</h1><p class="muted">${p.subtitle}</p><div class="links">${p.systems.length ? p.systems.map(link).join("") : '<span class="tag">Comprovação via e-mail da equipe</span>'}</div></section><div class="details"><div><section class="panel"><div class="eyebrow">Objetivo</div><h3>O que este processo resolve</h3><p>${p.objective}</p></section>${p.sections.map((s, i) => `<section class="panel"><div class="eyebrow">Etapa ${String(i + 1).padStart(2, "0")}</div><h3>${s.name}</h3>${s.items.map((v, j) => `<div class="step"><span class="num">${j + 1}</span><p>${v}</p></div>`).join("")}</section>`).join("")}${p.table ? `<section class="panel"><div class="eyebrow">Consulta rápida</div><h3>Regras e referências</h3><div class="tablewrap"><table><thead><tr>${p.table.headers.map((x) => `<th>${x}</th>`).join("")}</tr></thead><tbody>${p.table.rows.map((r) => `<tr>${r.map((x) => `<td>${x}</td>`).join("")}</tr>`).join("")}</tbody></table></div></section>` : ""}${p.visuals ? `<section class="panel evergreen-guide"><div class="eyebrow">Guia visual com setas</div><h3>Passo a passo ilustrado</h3><p class="muted">As setas e as instruções aparecem ao lado das capturas, sem cobrir os botões. Clique em uma imagem para ampliar.</p>${p.visuals.map((v) => `<figure class="guide-figure"><figcaption><strong>${v.title}</strong><p>${v.caption}</p></figcaption><div class="guide-layout"><a class="guide-shot" href="${v.src}" target="_blank" rel="noopener noreferrer"><img src="${v.src}" alt="${v.title}: captura de tela do procedimento" loading="lazy"></a><div class="guide-arrows" aria-label="Indicações do print">${(v.arrows || []).map((a, i) => `<div class="guide-arrow"><span class="arrow-symbol" aria-hidden="true">←</span><span><b>${i + 1}.</b> ${a}</span></div>`).join("")}</div></div></figure>`).join("")}</section>` : ""}${p.example ? `<section class="panel"><div class="eyebrow">Exemplo do guia original</div><h3>Como identificar a comprovação no e-mail</h3><p class="muted">Observe o número da unidade no assunto e a confirmação “Custos isentos.” no corpo da mensagem.</p><a href="${EMAIL}" target="_blank" rel="noopener noreferrer" title="Abrir imagem ampliada"><img class="example" src="${EMAIL}" alt="Exemplo anotado de e-mail de isenção, mostrando assunto e confirmação de custos isentos"></a></section>` : ""}</div><aside><section class="panel"><div class="eyebrow">Conferência final</div><h3>Checklist do processo</h3>${p.checks.map((x) => `<label class="check"><input type="checkbox"><span>${x}</span></label>`).join("")}<p class="muted" style="font-size:12px">Checklist local de estudo; não substitui o registro operacional.</p></section><section class="warning"><strong>⚠ Regras e atenção</strong><p>${p.warning}</p></section></aside></div>`;
+        const p = DATA.find(x => x.id === active);
+        return p ? window.renderProcedureGuide(p, {link, email:EMAIL}) : library();
       }
       function about() {
         return `<div class="eyebrow">Sobre o portal</div><h2>CAMPS Connect</h2><section class="panel"><p>Biblioteca de consulta e treinamento dos procedimentos operacionais realizados na Transtec World, organizada por armador, sistema e atividade.</p><p>O conteúdo é um material de apoio em revisão. Processos incompletos são identificados como pendentes, para evitar instruções presumidas.</p></section>`;
@@ -2024,6 +2028,7 @@ button:focus-visible,a:focus-visible,input:focus-visible {
               : page === "systems"
                 ? systems()
                 : about();
+        window.mountProcedureGuide();
       }
       document.addEventListener("click", (e) => {
         const b = e.target.closest("button");

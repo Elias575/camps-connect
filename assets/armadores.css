@@ -1,4 +1,10 @@
 /* Biblioteca marítima: identidade dos parceiros e leitura dos procedimentos. */
+.port-card .carrier-photo { margin:-25px -25px 22px; position:relative; aspect-ratio:16/10; overflow:hidden; background:#e6eef3; }
+.carrier-photo img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s; }
+.port-card:hover .carrier-photo img { transform:scale(1.04); }
+.carrier-photo figcaption { position:absolute; bottom:0; left:0; right:0; padding:8px 12px; color:white; background:#102b41cc; font-size:10px; }
+.port-card.has-photo .port-symbol { display:none; }
+.port-card.has-photo .port-card-title { margin-top:18px; }
 .brands { grid-template-columns:repeat(auto-fit,minmax(245px,1fr)); gap:20px; }
 .brandcard.port-card {
  position:relative; isolation:isolate; display:flex; flex-direction:column;
