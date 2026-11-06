@@ -1293,6 +1293,7 @@ button:focus-visible,a:focus-visible,input:focus-visible {
 <link rel="stylesheet" href="/assets/armadores.css">
 <link rel="stylesheet" href="/assets/portal-pages.css">
 <link rel="stylesheet" href="/assets/procedure-reader.css">
+<link rel="stylesheet" href="/assets/motion-performance.css">
 <script src="/assets/procedure-reader.js"></script>
 <script src="/assets/carrier-photos.js"></script>
 </head>
@@ -2188,6 +2189,7 @@ button:focus-visible,a:focus-visible,input:focus-visible {
 
   botaoMenu.addEventListener("click", () => {
     const fechado = estruturaSite.classList.toggle("menu-fechado");
+    document.getElementById("sidebar").inert = fechado;
 
     botaoMenu.setAttribute("aria-expanded", String(!fechado));
     botaoMenu.setAttribute(

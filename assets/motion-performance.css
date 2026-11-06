@@ -1,0 +1,28 @@
+/* Evita recalcular o layout a cada quadro ao recolher a navegação. */
+.shell,.main { transition:none!important; }
+.side { transition:transform .28s ease-out!important; }
+.side nav button,.cta,.card,.brandcard,.panel,.linkbtn { will-change:auto; }
+.card,.brandcard,.panel,.linkbtn,.cta { transition:transform .2s ease-out!important; }
+/* O botão acompanha a barra por transform, sem animar a propriedade left. */
+#toggleSidebar,.shell.menu-fechado #toggleSidebar {
+ left:16px!important;
+ transform:translateX(218px);
+ transition:transform .28s ease-out!important;
+}
+#toggleSidebar:hover { transform:translateX(218px); }
+.shell.menu-fechado #toggleSidebar,.shell.menu-fechado #toggleSidebar:hover { transform:translateX(0); }
+#toggleSidebar .cc-menu-arrow { transition:transform .28s ease-out; }
+/* Entradas sem desfoque nem animação de contêineres grandes. */
+#app > * { animation:cc-light-enter .2s ease-out both!important; }
+#app > :nth-child(n) { animation-delay:0s!important; }
+@keyframes cc-light-enter { from { opacity:.7; } to { opacity:1; } }
+.hero::after,.about-orbit,.tela-login::after { animation:none!important; }
+#cc-inicializando.cc-hide *,#cc-inicializando.cc-hide::before { animation:none!important; }
+@media(max-width:900px) {
+ #toggleSidebar,.shell.menu-fechado #toggleSidebar { left:auto!important; right:16px!important; }
+ #toggleSidebar,#toggleSidebar:hover,.shell.menu-fechado #toggleSidebar,.shell.menu-fechado #toggleSidebar:hover { transform:none; }
+}
+@media(prefers-reduced-motion:reduce) {
+ .side,#toggleSidebar,#toggleSidebar .cc-menu-arrow { transition:none!important; }
+ #app > * { animation:none!important; }
+}

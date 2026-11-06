@@ -12,7 +12,7 @@
           target.animate([
             {opacity:0, transform:'translateY(18px)'},
             {opacity:1, transform:'translateY(0)'}
-          ], {duration:480, delay:Number(target.dataset.ccDelay || 0), easing:'cubic-bezier(.22,1,.36,1)'});
+          ], {duration:240, easing:'ease-out'});
         }
       });
     }, {threshold:0.08});
