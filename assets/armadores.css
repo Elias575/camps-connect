@@ -2,9 +2,9 @@
 .port-card .carrier-photo { margin:-25px -25px 22px; position:relative; aspect-ratio:4/3; overflow:hidden; background:#e6eef3; }
 .carrier-photo-link { display:block; width:100%; height:100%; position:relative; cursor:zoom-in; }
 .carrier-photo img { width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
-.carrier-photo-expand { position:absolute; right:12px; bottom:12px; border:1px solid #ffffff66; padding:6px 10px; border-radius:20px; color:white; background:#071b2cdd; font-size:11px; }
+.carrier-photo-expand { position:absolute; right:12px; bottom:12px; border:1px solid #ffffff66; padding:6px 10px; border-radius:20px; color:white; background:#071b2cdd; font-size:13px; }
 .carrier-photo-link:focus-visible { outline-offset:-5px; }
-.carrier-photo figcaption { position:absolute; bottom:0; left:0; right:0; padding:8px 12px; color:white; background:#102b41cc; font-size:10px; }
+.carrier-photo figcaption { position:absolute; bottom:0; left:0; right:0; padding:8px 12px; color:white; background:#102b41cc; font-size:12px; }
 .port-card.has-photo .port-symbol { display:none; }
 .port-card.has-photo .port-card-title { margin-top:18px; }
 .brands { grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr)); gap:20px; }
@@ -20,40 +20,40 @@
 .port-card-top { display:flex; align-items:center; justify-content:space-between; gap:8px; }
 .port-symbol { display:grid; place-items:center; width:46px; height:46px; border:1px solid #ffffff20; background:#ffffff08; border-radius:14px; color:color-mix(in srgb,var(--color) 65%,white); }
 .port-symbol svg { width:31px; height:31px; }
-.port-status { font-size:10px; color:#c3cfd8; border:1px solid #ffffff20; border-radius:30px; padding:5px 8px; white-space:nowrap; }
+.port-status { font-size:12px; color:#c3cfd8; border:1px solid #ffffff20; border-radius:30px; padding:5px 8px; white-space:nowrap; }
 .port-status.has-guides::before { content:""; display:inline-block; width:5px; height:5px; border-radius:50%; background:#7fe0bb; margin-right:5px; }
 .port-card-title { margin:28px 0 18px; }
-.brandcard.port-card .eyebrow { color:#adc1d2; font-size:9px; letter-spacing:2px; }
+.brandcard.port-card .eyebrow { color:#adc1d2; font-size:11px; letter-spacing:2px; }
 .brandcard.port-card h3 { color:#fff; font-size:27px; letter-spacing:-.8px; margin:6px 0 0; }
 .port-card-count { display:flex; align-items:center; gap:13px; margin-top:auto; margin-bottom:23px; }
 .port-card-count strong { font-size:43px; font-weight:500; line-height:1; letter-spacing:-2px; }
-.brandcard.port-card .port-card-count p { color:#b8cbd9; font-size:11px; line-height:1.6; margin:0; }
-.brandcard.port-card button { display:flex; align-items:center; justify-content:space-between; width:100%; border:0; border-top:1px solid #ffffff26; padding:17px 0 0; border-radius:0; background:transparent; color:#fff; font-size:12px; text-align:left; box-shadow:none; }
+.brandcard.port-card .port-card-count p { color:#b8cbd9; font-size:13px; line-height:1.6; margin:0; }
+.brandcard.port-card button { display:flex; align-items:center; justify-content:space-between; width:100%; border:0; border-top:1px solid #ffffff26; padding:17px 0 0; border-radius:0; background:transparent; color:#fff; font-size:14px; text-align:left; box-shadow:none; }
 .port-card button > span:last-child { position:relative; display:grid; place-items:center; border-radius:50%; background:#ffffff12; width:29px; height:29px; font-size:0; transition:background .25s,transform .25s; }
 .port-card button > span:last-child::before { content:""; width:8px; height:8px; border-top:1.5px solid currentColor; border-right:1.5px solid currentColor; }
 .port-card button > span:last-child::after { content:""; position:absolute; width:12px; height:1.5px; background:currentColor; transform:rotate(-45deg); }
 .port-card button:hover > span:last-child { background:var(--color); transform:rotate(45deg); }
 .introarmador.port-intro { display:grid; grid-template-columns:minmax(0,1fr) 170px; gap:30px; padding:36px; border:1px solid #dce5ed; border-left:5px solid var(--armador); border-radius:20px; background:radial-gradient(ellipse at 100% 0%,color-mix(in srgb,var(--armador) 10%,transparent),transparent 65%),#fff; box-shadow:0 12px 35px #102b4108; }
 .introarmador.port-intro:hover { transform:none; }
-.port-intro .eyebrow { font-size:9px; letter-spacing:2px; }
+.port-intro .eyebrow { font-size:11px; letter-spacing:2px; }
 .port-intro h2 { font-size:clamp(28px,4vw,42px); letter-spacing:-1.5px; margin:12px 0; }
 .port-intro .tag { border-radius:30px; padding:5px 11px; }
 .port-intro-copy > p { max-width:730px; line-height:1.9; margin-bottom:0; }
 .port-intro-art { display:flex; flex-direction:column; justify-content:center; align-items:center; border-left:1px solid #dce5ed; color:#173d58; gap:8px; }
 .port-intro-art svg { width:72px; height:72px; color:var(--armador); }
-.port-intro-art span { font-size:8px; letter-spacing:1.5px; }
+.port-intro-art span { font-size:10px; letter-spacing:1.5px; }
 .port-intro-art strong { font-size:36px; font-weight:500; }
 .cards { counter-reset:procedure; gap:18px; }
 .cards .proc { counter-increment:procedure; position:relative; padding:27px; border-radius:18px; border-top:3px solid #245a7a; overflow:hidden; }
 .proc::before { content:counter(procedure,decimal-leading-zero); display:block; font-size:38px; line-height:1; letter-spacing:-2px; color:#c5d6e2; margin-bottom:22px; }
-.proc .eyebrow { font-size:9px; letter-spacing:1.6px; }
+.proc .eyebrow { font-size:11px; letter-spacing:1.6px; }
 .proc h3 { line-height:1.5; }
-.proc .bottom .outline { width:100%; background:#f2f7fa; border:0; font-size:12px; padding:14px; }
+.proc .bottom .outline { width:100%; background:#f2f7fa; border:0; font-size:14px; padding:14px; }
 .detailhero { border-left:5px solid #245a7a; background:linear-gradient(120deg,#fff,#f0f7fb); }
 .details > div > .panel:has(.step) { border-left:3px solid #c4dce9; }
 .step { position:relative; gap:16px; padding:6px 0; margin:0; }
 .step:not(:last-child)::after { content:""; position:absolute; top:41px; bottom:-6px; left:17px; width:1px; background:#d7e6ef; }
-.step .num { border-radius:50%; background:#163e59; color:white; font-size:12px; box-shadow:0 0 0 5px #f0f6fa; }
+.step .num { border-radius:50%; background:#163e59; color:white; font-size:14px; box-shadow:0 0 0 5px #f0f6fa; }
 .step p { padding-bottom:18px; line-height:1.8; }
 .details aside .panel { border-top:3px solid #248764; }
 .check { padding:10px 8px; margin:3px 0; border-bottom:1px solid #edf2f6; }
