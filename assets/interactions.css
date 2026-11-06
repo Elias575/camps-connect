@@ -1,0 +1,32 @@
+/* Movimento e feedback compartilhados pelo login e por todas as abas. */
+.tela-login { isolation:isolate; overflow:hidden; }
+.tela-login::after { content:""; position:absolute; width:75vmax; height:75vmax; z-index:-1; pointer-events:none; border-radius:50%; background:radial-gradient(circle,#299aca30,transparent 65%); animation:cc-ambient 16s ease-in-out infinite alternate; }
+.caixa-login { position:relative; box-sizing:border-box; }
+.caixa-login:focus-within { border-color:#64c4ee; box-shadow:0 24px 70px #020c1866,0 0 35px #64c4ee18; }
+.caixa-login input:focus { transform:translateY(-2px); }
+.caixa-login input { transition:transform .2s,border-color .2s,box-shadow .2s; }
+.cc-password-toggle { align-self:flex-end; background:transparent!important; color:#a4dafa!important; padding:5px 8px!important; font-size:12px; box-shadow:none!important; }
+button,a.linkbtn { -webkit-tap-highlight-color:transparent; }
+button:focus-visible,a:focus-visible,input:focus-visible { outline:3px solid #64c4ee; outline-offset:4px; }
+.card,.fleet .container,.linkbtn,.check { transition:transform .25s,box-shadow .25s,border-color .25s,background .25s; }
+@media (hover:hover) {
+ .card:hover { transform:translateY(-5px); box-shadow:0 18px 38px #102d471c; }
+ .fleet .container:hover { transform:translateX(-6px); }
+ .linkbtn:hover { transform:translateY(-3px); box-shadow:0 8px 20px #102d4720; }
+ .check:hover { background:#64c4ee12; }
+}
+button:active,.linkbtn:active { scale:.97; }
+.check { border-radius:8px; }
+.check:has(input:checked) { background:#e5f5ee; color:#236a4c; }
+.check input { accent-color:#248764; }
+.cc-check-progress { margin:12px 0 18px; font-size:12px; color:#32536c; }
+.cc-check-progress progress { display:block; width:100%; height:7px; margin-top:9px; accent-color:#248764; }
+.cc-back-top { position:fixed; right:22px; bottom:22px; z-index:900; border:1px solid #64c4ee66; border-radius:50%; width:46px; height:46px; color:white; background:#153c5d; box-shadow:0 8px 24px #102d4733; cursor:pointer; transition:opacity .2s,transform .2s; }
+.cc-back-top[hidden] { display:none; }
+.cc-click-wave { position:fixed; width:16px; height:16px; border:2px solid #64c4ee; border-radius:50%; pointer-events:none; z-index:20000; animation:cc-wave .5s ease-out forwards; }
+@keyframes cc-wave { to { transform:scale(3); opacity:0; } }
+@keyframes cc-ambient { from { transform:translate(-25%,-20%); } to { transform:translate(25%,20%); } }
+@media(prefers-reduced-motion:reduce) {
+ *,*::before,*::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; }
+ .cc-click-wave { display:none; }
+}
