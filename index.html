@@ -1344,10 +1344,12 @@ button:focus-visible,a:focus-visible,input:focus-visible {
   id="toggleSidebar"
   aria-label="Recolher menu lateral"
   aria-expanded="true"
+  aria-controls="sidebar"
+  title="Recolher menu lateral"
 >
-☰
+  <span class="cc-menu-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span>
 </button>
-        <aside class="side">  
+        <aside class="side" id="sidebar">
             <div class="logo">CAMPS <span>Connect.</span></div>
         <div class="small">Transtec World</div>
         <nav>
@@ -2180,6 +2182,7 @@ button:focus-visible,a:focus-visible,input:focus-visible {
       "aria-label",
       fechado ? "Expandir menu lateral" : "Recolher menu lateral"
     );
+    botaoMenu.title = fechado ? "Expandir menu lateral" : "Recolher menu lateral";
   });
 </script>
 <!-- LOGIN CAMPS CONNECT -->

@@ -1,4 +1,14 @@
 /* Movimento e feedback compartilhados pelo login e por todas as abas. */
+#toggleSidebar { left:234px!important; width:44px; height:44px; padding:0; display:grid; place-items:center; color:#d2f2ff; background:#153c5d; border:1px solid #72c9ed66; border-radius:50%!important; box-shadow:0 5px 18px #06182733; isolation:isolate; }
+#toggleSidebar::before { content:""; position:absolute; inset:-5px; border:1px solid #64c4ee; border-radius:50%; opacity:0; pointer-events:none; }
+#toggleSidebar:active::before { animation:cc-menu-orbit .6s ease-out; }
+#toggleSidebar .cc-menu-arrow { display:grid; place-items:center; width:26px; height:26px; transform:rotate(0deg); transition:transform .65s cubic-bezier(.34,1.56,.64,1); }
+#toggleSidebar .cc-menu-arrow svg { display:block; width:24px; height:24px; transition:translate .25s ease; }
+#toggleSidebar[aria-expanded="false"] .cc-menu-arrow { transform:rotate(180deg); }
+#toggleSidebar:hover .cc-menu-arrow svg { translate:3px 0; }
+#toggleSidebar:hover { box-shadow:0 5px 22px #64c4ee40; }
+@keyframes cc-menu-orbit { from { transform:scale(.8); opacity:.7; } to { transform:scale(1.6); opacity:0; } }
+@media(max-width:900px) { #toggleSidebar,.shell.menu-fechado #toggleSidebar { left:auto!important; right:16px!important; } }
 .tela-login { isolation:isolate; overflow:hidden; }
 .tela-login::after { content:""; position:absolute; width:75vmax; height:75vmax; z-index:-1; pointer-events:none; border-radius:50%; background:radial-gradient(circle,#299aca30,transparent 65%); animation:cc-ambient 16s ease-in-out infinite alternate; }
 .caixa-login { position:relative; box-sizing:border-box; }
