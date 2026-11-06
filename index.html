@@ -1290,6 +1290,7 @@ button:focus-visible,a:focus-visible,input:focus-visible {
 </style>
 
 <link rel="stylesheet" href="/assets/interactions.css">
+<link rel="stylesheet" href="/assets/armadores.css">
 </head>
 
   <body>
@@ -1950,13 +1951,17 @@ button:focus-visible,a:focus-visible,input:focus-visible {
       }
       function brandCard(b) {
         const n = DATA.filter((p) => p.brand === b[0]).length;
-        return `<article class="card brandcard" style="--color:${b[1]}"><span class="eyebrow">ARMADOR</span><h3>${b[0]}</h3><p>${n ? n + " procedimento(s) disponível(is)" : "Procedimentos ainda não cadastrados"}</p><button data-brand="${b[0]}">Ver procedimentos →</button></article>`;
+        return `<article class="card brandcard port-card" style="--color:${b[1]}"><div class="port-card-top"><span class="port-symbol" aria-hidden="true">${portIcon()}</span><span class="port-status ${n ? 'has-guides' : ''}">${n ? 'Biblioteca ativa' : 'Em preparação'}</span></div><div class="port-card-title"><span class="eyebrow">PARCEIRO MARÍTIMO</span><h3>${esc(b[0])}</h3></div><div class="port-card-count"><strong>${String(n).padStart(2,'0')}</strong><p>${n === 1 ? 'procedimento<br>para consultar' : n ? 'procedimentos<br>para consultar' : 'procedimentos<br>cadastrados'}</p></div><button data-brand="${esc(b[0])}"><span>${n ? 'Explorar procedimentos' : 'Conhecer armador'}</span><span aria-hidden="true">↗</span></button></article>`;
+      }
+      function portIcon() {
+        return '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 27l16-6 16 6-5 11H13L8 27Z"/><path d="M15 24V12h18v12M21 12V6h6v6M24 22v15M4 41c4-4 8 4 12 0s8 4 12 0 8 4 16 0M20 17h8"/></svg>';
       }
       function introArmador(b) {
         const d = DESCRICOES[b];
         if (!d) return "";
         const cor = (BRANDS.find((x) => x[0] === b) || [])[1] || "#1b537d";
-        return `<section class="introarmador" style="--armador:${cor}"><span class="eyebrow">CONHEÇA O ARMADOR</span><h2>${esc(b)}</h2><div class="tag">${esc(d[0])}</div><p>${esc(d[1])}</p></section>`;
+        const total = DATA.filter(p => p.brand === b).length;
+        return `<section class="introarmador port-intro" style="--armador:${cor}"><div class="port-intro-copy"><span class="eyebrow">CONEXÕES QUE MOVEM A OPERAÇÃO</span><h2>${esc(b)}</h2><div class="tag">${esc(d[0])}</div><p>${esc(d[1])}</p></div><div class="port-intro-art" aria-hidden="true">${portIcon()}<span>GUIAS OPERACIONAIS</span><strong>${String(total).padStart(2,'0')}</strong></div></section>`;
       }
       function home() {
         return `<section class="hero"><div><div class="eyebrow" style="color:#a4c7e2">CAMPS Santos × Transtec World</div><h1>CAMPS<br>Connect.</h1><p>Acesse os procedimentos e as orientações das atividades realizadas na Transtec World.</p><button class="cta" data-page="library">Consultar procedimentos ↗</button></div><div class="fleet"><div class="eyebrow" style="color:#c3d7e8;margin-bottom:8px">SELECIONE UM ARMADOR</div>${BRANDS.map((b) => `<button class="container ${b[0] === "Log-In" ? "login-container" : ""}" style="--color:${b[1]}" data-brand="${b[0]}" aria-label="Abrir armador ${b[0]}">${b[0].toUpperCase()}</button>`).join("")}</div></section><h2>Biblioteca por armador</h2><p class="muted">Selecione uma parceria para consultar as instruções disponíveis.</p><div class="brands">${BRANDS.map(brandCard).join("")}</div><h2>Acessos rápidos</h2><div class="links">${Object.keys(LINKS).map(link).join("")}</div>`;
