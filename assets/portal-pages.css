@@ -133,3 +133,41 @@
 .catalog-card-top,.system-tile-top { flex-wrap:wrap; }
 .directory-brand strong { overflow-wrap:anywhere; }
 .library-result-count { white-space:normal; text-align:right; }
+/* Seleção em bilhetes de rota, com identidade própria por armador. */
+.welcome-directory { background:#0b233480; border:1px solid #7da9bf33; padding:26px; border-radius:22px; }
+.directory-heading { margin-bottom:24px; }
+.directory-heading h2 { font-size:26px; letter-spacing:-.8px; }
+.directory-heading .eyebrow { color:#a2d8e6; letter-spacing:2px; }
+.directory-mark { width:45px; height:45px; border:1px solid #8ccfdf40; border-radius:50%; display:grid; place-items:center; }
+.directory-mark svg { width:30px; height:30px; }
+.directory-grid { gap:12px; }
+.directory-brand { position:relative; display:flex; flex-direction:column; align-items:stretch; gap:0; padding:15px 17px 0; background:color-mix(in srgb,var(--brand-color) 7%,#fff); color:#15374e; border:1px solid #ffffffb3; border-top:3px solid var(--brand-color); border-radius:12px; overflow:hidden; transition:transform .18s ease-out; }
+.directory-brand:hover { background:color-mix(in srgb,var(--brand-color) 12%,#fff); border-color:#ffffffb3; border-top-color:var(--brand-color); transform:translateY(-3px); }
+.directory-ticket-top { display:flex; justify-content:space-between; align-items:center; gap:12px; color:#607d8c; font-size:9px; font-weight:600; letter-spacing:1.7px; }
+.directory-ticket-top > span:last-child { letter-spacing:.5px; color:#6a8292; }
+.directory-ticket-name { display:flex; align-items:center; gap:10px; min-height:55px; }
+.directory-ticket-name .directory-color { width:5px; height:22px; background:var(--brand-color); }
+.directory-brand .directory-ticket-name strong { font-size:18px; font-weight:800; letter-spacing:-.5px; }
+.directory-ticket-bottom { display:flex; justify-content:space-between; align-items:center; gap:8px; border-top:1px dashed #aec7d5; padding:10px 0; }
+.directory-brand .directory-ticket-bottom small { color:#526f82; font-size:11px; margin:0; }
+.directory-brand .directory-arrow { width:23px; height:23px; display:grid; place-items:center; border-radius:50%; background:#12394e0b; color:#28516b; font-size:16px; }
+.directory-brand:last-child { grid-column:1/-1; display:grid; grid-template-columns:1fr 1fr; column-gap:18px; padding:13px 17px; }
+.directory-brand:last-child .directory-ticket-top { grid-column:1/-1; }
+.directory-brand:last-child .directory-ticket-name { min-height:45px; }
+.directory-brand:last-child .directory-ticket-bottom { border-top:0; border-left:1px dashed #aec7d5; padding:8px 0 8px 18px; }
+.directory-brand[data-brand="Log-In"],.directory-brand[data-brand="Log-In"]:hover { background:#f0faf3; border-top-color:#98cba9; }
+.directory-brand[data-brand="Log-In"] .directory-color { background:linear-gradient(#98cba9 55%,#3285a1 55%); }
+.directory-brand[data-brand="Log-In"] .directory-ticket-name strong { color:#276c57; }
+.welcome-hero .directory-note { margin-top:19px; font-size:11px; }
+@media(max-width:650px) {
+ .welcome-directory { padding:20px 13px; }
+ .directory-heading h2 { font-size:23px; }
+ .directory-grid { gap:10px; }
+ .directory-brand { padding:12px 11px 0; }
+ .directory-brand .directory-ticket-name strong { font-size:16px; }
+ .directory-ticket-name { gap:7px; }
+ .directory-brand .directory-ticket-bottom small { font-size:10px; }
+ .directory-ticket-top { font-size:8px; }
+ .directory-brand:last-child { padding:12px 11px; column-gap:10px; }
+ .directory-brand:last-child .directory-ticket-bottom { padding-left:10px; }
+}
